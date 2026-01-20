@@ -9,6 +9,8 @@ on:
 jobs:
   auto-assign:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - name: Assign PR or Issue
         uses: actions/github-script@v7
@@ -22,7 +24,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                assignees: ['29cmtruedamage', 'Paul-SE1', 'xP3rsy']
+                assignees: ['29cmtruedamage', 'xP3rsy']
               });
             } else {
               // Issue
