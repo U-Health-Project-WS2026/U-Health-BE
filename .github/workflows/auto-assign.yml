@@ -32,6 +32,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                assignees: ['issue-user']
+                assignees: ['29cmtruedamage', 'xP3rsy']
               });
             }
