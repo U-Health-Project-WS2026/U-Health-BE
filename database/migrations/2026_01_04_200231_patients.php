@@ -18,11 +18,13 @@ return new class extends Migration
             $table->string("name");
             $table->integer("age");
             $table->tinyInteger("sex");
-            $table->string("username");
-            $table->string("password");
-            $table->string("email");
             $table->string("location");
             $table->timestamps();
+
+            $table->foreignId('user_id')
+                ->unique()
+                ->constrained()
+                ->cascadeOnDelete();
         }
         );
     }

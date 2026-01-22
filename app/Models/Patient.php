@@ -9,12 +9,10 @@ class Patient extends Model
     protected $table ='patients';
     protected $primaryKey = 'patient_id';
     protected $fillable = [
+        'user_id',
         'name',
         'age',
         'sex',
-        'username',
-        'password',
-        'email',
         'location',
     ];
 
@@ -26,6 +24,12 @@ class Patient extends Model
     {
         return $this->hasMany(Treatment::class, 'patient_id', 'patient_id');
     }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 
 }
