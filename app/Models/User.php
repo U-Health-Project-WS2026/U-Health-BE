@@ -18,8 +18,10 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $table ='users';
+    protected $primaryKey = 'user_id';
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
     ];
@@ -39,14 +41,16 @@ class User extends Authenticatable
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+     *@var array
+     **/
+
+    protected $casts = [
+        'two_factor_confirmed_at' => 'datetime',
+    ];
+
+
+    public function patient()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'two_factor_confirmed_at' => 'datetime',
-        ];
+        return $this->hasOne(Patient::class, 'user_id', 'user_id');
     }
 }
