@@ -10,6 +10,7 @@ class Treatment extends Model
     protected $primaryKey = 'treatment_id';
     protected $fillable = [
         'admin_id',
+        //'user_id',
         'patient_id',
         'disease_id',
         'diagnosis',
@@ -26,6 +27,11 @@ class Treatment extends Model
     {
         return $this->belongsTo(Admin::class, 'admin_id', 'admin_id');
     }
+
+    //public function users()
+    //    {
+    //        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    //    }
 
     public function diseases()
     {

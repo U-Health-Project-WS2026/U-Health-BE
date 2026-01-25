@@ -37,6 +37,7 @@ class User extends Authenticatable
         'two_factor_secret',
         'two_factor_recovery_codes',
         'remember_token',
+        'is_admin',
     ];
 
     /**
@@ -54,4 +55,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Patient::class, 'user_id', 'user_id');
     }
+
+    //public function bookings(){
+    //return $this->hasMany(Booking::class, 'user_id', 'user_id');
+    //}
+
+    //public function treatments(){
+    //    return $this->hasMany(Treatment::class, 'user_id', 'user_id');
+    //}
 }
