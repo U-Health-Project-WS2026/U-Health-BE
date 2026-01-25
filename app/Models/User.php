@@ -18,8 +18,10 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $table ='users';
+    protected $primaryKey = 'user_id';
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
     ];
@@ -34,19 +36,30 @@ class User extends Authenticatable
         'two_factor_secret',
         'two_factor_recovery_codes',
         'remember_token',
+        'is_admin',
     ];
 
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+     *@var array
+     **/
+
+    protected $casts = [
+        'two_factor_confirmed_at' => 'datetime',
+    ];
+
+
+    public function patient()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'two_factor_confirmed_at' => 'datetime',
-        ];
+        return $this->hasOne(Patient::class, 'user_id', 'user_id');
     }
+
+    //public function bookings(){
+    //return $this->hasMany(Booking::class, 'user_id', 'user_id');
+    //}
+
+    //public function treatments(){
+    //    return $this->hasMany(Treatment::class, 'user_id', 'user_id');
+    //}
 }

@@ -26,6 +26,11 @@ return new class extends Migration
                 ->references('admin_id')->on('admins')
                 ->onDelete('cascade');
 
+            //$table->foreignId('user_id')
+            //                ->unique()
+            //                ->constrained()
+            //                ->cascadeOnDelete();
+
             $table->foreign('patient_id')
                 ->references('patient_id')->on('patients')
                 ->onDelete('cascade');
