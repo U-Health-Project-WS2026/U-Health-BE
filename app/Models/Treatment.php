@@ -35,7 +35,7 @@ class Treatment extends Model
 
     public function diseases()
     {
-        return $this->belongsToMany(Disease::class, 'treatments_diseases', 'treatment_id', 'disease_id');
+        return $this->belongsToMany(Diseases::class, 'treatments_diseases', 'treatment_id', 'disease_id');
     }
 
     public function medications(){
