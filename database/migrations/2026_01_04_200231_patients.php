@@ -22,8 +22,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignId('user_id')
-                ->unique()
-                ->constrained()
+                ->references('user_id')->on('users')
                 ->cascadeOnDelete();
         }
         );
