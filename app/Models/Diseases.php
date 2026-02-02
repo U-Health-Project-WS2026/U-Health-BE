@@ -11,7 +11,7 @@ class Diseases extends Model
     protected $fillable = [
         'name',
         'description',
-        'icd_code'
+        'icd_code',
     ];
 
     public function treatments()

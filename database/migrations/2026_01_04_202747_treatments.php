@@ -13,26 +13,16 @@ return new class extends Migration
     {
         Schema::create(table: 'treatments', callback: function (Blueprint $table): void
         {
-            $table->id("treatment_id");
-            $table->unsignedBigInteger("patient_id");
-            $table->unsignedBigInteger("admin_id");
-            $table->text("diagnosis");
-            $table->string("type_of_treatment");
+            $table->id('treatment_id');
+            $table->unsignedBigInteger('user_id');
+            $table->text('diagnosis');
+            $table->string('type_of_treatment');
+            $table->datetimes('date_of_treatment');
             $table->timestamps();
 
-            $table->foreign('admin_id')
-                ->references('admin_id')->on('admins')
+            $table->foreign('user_id')
+                ->references('user_id')->on('users')
                 ->onDelete('cascade');
-
-            //$table->foreignId('user_id')
-            //                ->unique()
-            //                ->constrained()
-            //                ->cascadeOnDelete();
-
-            $table->foreign('patient_id')
-                ->references('patient_id')->on('patients')
-                ->onDelete('cascade');
-
         }
         );
     }

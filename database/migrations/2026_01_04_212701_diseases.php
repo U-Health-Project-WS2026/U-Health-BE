@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('diseases', function (Blueprint $table): void
         {
 
-            $table->id("disease_id");
-            $table->string("name");
-            $table->string("description");
-            $table->string("icd_code");
+            $table->id('disease_id');
+            $table->string('name');
+            $table->string('description');
+            $table->string('icd_code');
             $table->timestamps();
         }
         );
