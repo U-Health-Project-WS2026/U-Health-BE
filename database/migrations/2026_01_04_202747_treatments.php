@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('patient_id');
             $table->text('diagnosis');
             $table->string('type_of_treatment');
-            $table->datetimes('date_of_treatment');
+            $table->dateTime('date_of_treatment');
             $table->timestamps();
 
             $table->foreign('patient_id')
