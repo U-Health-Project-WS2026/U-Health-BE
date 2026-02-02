@@ -15,15 +15,14 @@ return new class extends Migration
         {
 
             $table->id('booking_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('patient_id');
             $table->dateTime('time_slot_start');
             $table->dateTime('time_slot_end');
             $table->tinyInteger('status');
             $table->timestamps();
 
-            $table->foreign('user_id')
-                ->references('user_id')->on('users')
-                ->onDelete('cascade');
+            $table->foreign('patient_id')
+                ->references('patient_id')->on('patients');
         }
         );
     }

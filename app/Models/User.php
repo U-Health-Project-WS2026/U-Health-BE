@@ -25,11 +25,6 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'first_name',
-        'last_name',
-        'age',
-        'sex',
-        'location',
     ];
 
     /**
@@ -55,11 +50,7 @@ class User extends Authenticatable
         'two_factor_confirmed_at' => 'datetime',
     ];
 
-    public function bookings(){
-    return $this->hasMany(Booking::class, 'user_id', 'user_id');
-    }
-
-    public function treatments(){
-        return $this->hasMany(Treatment::class, 'user_id', 'user_id');
+    public function patients(){
+    return $this->hasMany(Patient::class, 'user_id', 'user_id');
     }
 }

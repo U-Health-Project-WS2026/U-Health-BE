@@ -14,8 +14,7 @@ class Diseases extends Model
         'icd_code',
     ];
 
-    public function treatments()
-    {
+    public function treatments(){
         return $this->belongsToMany(Treatment::class, 'treatments_diseases','disease_id', 'treatment_id');
     }
 }

@@ -9,14 +9,14 @@ class Treatment extends Model
     protected $table ='treatments';
     protected $primaryKey = 'treatment_id';
     protected $fillable = [
-        'user_id',
+        'patient_id',
         'diagnosis',
         'type_of_treatment',
         'date_of_treatment',
     ];
 
-    public function users(){
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    public function patients(){
+        return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');
     }
 
     public function diseases(){
