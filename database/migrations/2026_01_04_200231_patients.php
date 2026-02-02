@@ -15,7 +15,8 @@ return new class extends Migration
         {
 
             $table->id("patient_id");
-            $table->string("name");
+            $table->string("first_name");
+            $table->string("last_name");
             $table->integer("age");
             $table->tinyInteger("sex");
             $table->string("location");
