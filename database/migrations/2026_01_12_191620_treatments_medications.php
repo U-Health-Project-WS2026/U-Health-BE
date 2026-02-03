@@ -21,12 +21,10 @@ return new class extends Migration
             $table->primary(['treatment_id', 'medication_id']);
 
             $table->foreign('treatment_id')
-                ->references('treatment_id')->on('treatments')
-                ->onDelete('cascade');
+                ->references('treatment_id')->on('treatments');
 
             $table->foreign('medication_id')
-                ->references('medication_id')->on('medications')
-                ->onDelete('cascade');
+                ->references('medication_id')->on('medications');
         });
 
     }

@@ -50,17 +50,7 @@ class User extends Authenticatable
         'two_factor_confirmed_at' => 'datetime',
     ];
 
-
-    public function patient()
-    {
-        return $this->hasOne(Patient::class, 'user_id', 'user_id');
+    public function patients(){
+    return $this->hasOne(Patient::class, 'user_id', 'user_id');
     }
-
-    //public function bookings(){
-    //return $this->hasMany(Booking::class, 'user_id', 'user_id');
-    //}
-
-    //public function treatments(){
-    //    return $this->hasMany(Treatment::class, 'user_id', 'user_id');
-    //}
 }

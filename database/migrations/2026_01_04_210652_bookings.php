@@ -14,26 +14,15 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table): void
         {
 
-            $table->id("booking_id");
-            $table->unsignedBigInteger("admin_id");
-            $table->unsignedBigInteger("patient_id");
-            $table->dateTime("time_slot_start");
-            $table->dateTime("time_slot_end");
-            $table->tinyInteger("status");
+            $table->id('booking_id');
+            $table->unsignedBigInteger('patient_id');
+            $table->dateTime('time_slot_start');
+            $table->dateTime('time_slot_end');
+            $table->tinyInteger('status');
             $table->timestamps();
 
-            $table->foreign('admin_id')
-                ->references('admin_id')->on('admins')
-                ->onDelete('cascade');
-
-            //$table->foreignId('user_id')
-            //                ->unique()
-            //                ->constrained()
-            //                ->cascadeOnDelete();
-
             $table->foreign('patient_id')
-                ->references('patient_id')->on('patients')
-                ->onDelete('cascade');
+                ->references('patient_id')->on('patients');
         }
         );
     }
