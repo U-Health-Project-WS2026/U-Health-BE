@@ -56,5 +56,8 @@ class AdminPatientController extends Controller
         $user->tokens()->delete();
         $user->patients()->delete();
         $user->delete();
+        return response()->json([
+            "message"=>"Patient erfolgreich gelöscht",
+        ]);
     }
 }

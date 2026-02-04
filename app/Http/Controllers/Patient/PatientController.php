@@ -55,7 +55,7 @@ class PatientController extends Controller
         $user->delete();
 
         return response()->json([
-           "message"=>"Account erfolgreich gelsöcht" 
+           "message"=>"Account erfolgreich gelöscht" 
         ]);
     }
 }
