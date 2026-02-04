@@ -16,9 +16,13 @@ class LoginController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
         $user = $request->user();
-        $token = $user->createToken('default_token')->plainTextToken;
+        
+        //his current token gets deleted
+        $user->tokens()->delete();
+        
+        //new token is created
+        $token = $user->createToken('LOG-user_token')->plainTextToken;
         return response()->json([
             "user"=>$user,
             "token"=>$token

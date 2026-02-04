@@ -46,8 +46,16 @@ class PatientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete_my_account(Request $request)
     {
-        //
+        $user = $request->user();
+        $patient = Patient::where('user_id', $user->user_id)->first();
+        $patient->delete();
+        $user->tokens()->delete();
+        $user->delete();
+
+        return response()->json([
+           "message"=>"Account erfolgreich gelsöcht" 
+        ]);
     }
 }

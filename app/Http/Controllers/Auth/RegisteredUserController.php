@@ -45,13 +45,14 @@ class RegisteredUserController extends Controller
         
         //a new patient related to the user created above gets created
         $user->patients()->create($patientData);
-
+        $token = $user->createToken('REG-user_token')->plainTextToken;
         //event(new Registered($user));
 
         //Auth::login($user);
 
         return response()->json([
-            "message"=>"USER ERFOLGREICH EINGELOOGT UND PATIENT ERSTELLT"
+            "message"=>"USER ERFOLGREICH EINGELOOGT UND PATIENT ERSTELLT",
+            "token"=>$token
         ]);
     }
 }

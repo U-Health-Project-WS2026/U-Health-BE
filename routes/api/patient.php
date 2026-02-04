@@ -10,6 +10,7 @@ Route::middleware('auth:sanctum') //User must be auth
 
     //personal Infos
     Route::get('me', [PatientController::class, 'show_my_info']);
+    Route::delete('me', [PatientController::class, 'delete_my_account']);
 
     
 });

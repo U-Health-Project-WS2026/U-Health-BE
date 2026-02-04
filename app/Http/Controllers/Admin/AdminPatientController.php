@@ -48,8 +48,12 @@ class AdminPatientController extends Controller
      */
     public function destroy(string $id)
     {
+        //delete by PATIENT ID
         $user_id = Patient::findOrFail($id)->users->user_id;
         $user = User::findOrFail($user_id);
+        $token = $user->currentAccessToken();
+
+        $user->tokens()->delete();
         $user->patients()->delete();
         $user->delete();
     }
