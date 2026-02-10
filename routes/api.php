@@ -1,23 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PatientController;
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1') // ALL API REQUESTS begin with api/v1/...
+    ->group(function () {
+        // kleine Test-Route
+        Route::get('/ping', function () {
+            return response()->json(['message' => 'api v1 works']);
+        });
 
-    // Testroute: /api/v1/ping
-    Route::get('/ping', function () {
-        return response()->json(['message' => 'api v1 works']);
+        require __DIR__ . '/api/admin.php';
+        require __DIR__ . '/api/patient.php';
+        require __DIR__ . '/api/auth.php';
     });
-
-    // Admin: Patient Management  -> /api/v1/admin/...
-    Route::prefix('admin')->group(function () {
-        Route::get('/patients', [PatientController::class, 'index']);
-        Route::get('/patients/{id}', [PatientController::class, 'show']);
-        Route::post('/patients', [PatientController::class, 'store']);
-        Route::match(['put', 'patch'], '/patients/{id}', [PatientController::class, 'update']);
-        Route::delete('/patients/{id}', [PatientController::class, 'destroy']);
-    });
-
-});
-

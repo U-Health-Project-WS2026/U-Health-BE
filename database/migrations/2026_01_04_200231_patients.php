@@ -15,15 +15,15 @@ return new class extends Migration
         {
 
             $table->id("patient_id");
-            $table->string("name");
+            $table->string("first_name");
+            $table->string("last_name");
             $table->integer("age");
             $table->tinyInteger("sex");
             $table->string("location");
             $table->timestamps();
 
             $table->foreignId('user_id')
-                ->references('user_id')->on('users')
-                ->cascadeOnDelete();
+                ->references('user_id')->on('users');
         }
         );
     }
