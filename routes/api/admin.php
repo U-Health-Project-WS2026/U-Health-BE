@@ -17,4 +17,8 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     Route::get('bookings', [AdminBookingController::class, 'index']);
     Route::get('bookings/patient/{patientId}', [AdminBookingController::class, 'byPatient']);
     Route::delete('bookings/{bookingId}', [AdminBookingController::class, 'destroy']);
+
+    //create booking timeslot
+    Route::post('/admin/bookings/slots', [AdminBookingController::class, 'createTimeSlot']);
+
 });

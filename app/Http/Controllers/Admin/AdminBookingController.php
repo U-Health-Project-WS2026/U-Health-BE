@@ -48,4 +48,43 @@ class AdminBookingController extends Controller
 
         return response()->json(['message' => 'Booking deleted']);
     }
+
+    /**
+     * Admin: Create available timeslot
+     * POST api/v1/admin/bookings/slots
+     */
+    public function createTimeSlot(Request $request)
+    {
+        //Validating the data thats being send
+        $validated = $request->validate([
+            'time_slot_start' => 'required|date|after:now',
+            'time_slot_end' => 'required|date|after:time_slot_start',
+        ]);
+
+        //Looking for duplicates or overlaps of other timeslots
+        $overlap = Booking::where('time_slot_start', '<', $validated['time_slot_end'])
+            ->where('time_slot_end','>',$validated['time_slot_start'])
+            ->exists();
+
+        //Error Message if overlapping exists
+        if ($overlap) {
+            return response()->json([
+                'message' => 'Timeslot overlaps with existing timeslot or already exists'
+            ], 422);
+        }
+
+        //Create new timeslot with the following attributes
+        $slot = Booking::create([
+            'patient_id' => null,
+            'time_slot_start' => $validated['time_slot_start'],
+            'time_slot_end' => $validated['time_slot_end'],
+            'status' => 0,
+        ]);
+
+        //Message if creation was successfully
+        return response()->json([
+            'message' => 'Timeslot successfully created',
+            'slot' => $slot,
+        ], 201);
+    }
 }
