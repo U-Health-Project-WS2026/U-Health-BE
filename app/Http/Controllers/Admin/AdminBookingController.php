@@ -14,7 +14,7 @@ class AdminBookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::orderBy('time_slot_start', 'desc')->get();
+        $bookings = Booking::with('patients')->get();
 
         return AdminBookingResource::collection($bookings);
     }
@@ -25,7 +25,8 @@ class AdminBookingController extends Controller
      */
     public function byPatient(int $patientId)
     {
-        $bookings = Booking::where('patient_id', $patientId)
+        $bookings = Booking::with('patients')
+            ->where('patient_id', $patientId)
             ->orderBy('time_slot_start', 'desc')
             ->get();
 
