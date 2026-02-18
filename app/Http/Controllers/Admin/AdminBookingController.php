@@ -34,23 +34,6 @@ class AdminBookingController extends Controller
     }
 
     /**
-     * Admin: eine Buchung löschen.
-     * DELETE /api/v1/admin/bookings/{bookingId}
-     */
-    public function destroy(int $bookingId)
-    {
-        $booking = Booking::find($bookingId);
-
-        if (! $booking) {
-            return response()->json(['message' => 'Booking not found'], 404);
-        }
-
-        $booking->delete();
-
-        return response()->json(['message' => 'Booking deleted']);
-    }
-
-    /**
      * Admin: Create available timeslot
      * POST api/v1/admin/bookings/slots
      */
