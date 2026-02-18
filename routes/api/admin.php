@@ -20,5 +20,7 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
 
     //create booking timeslot
     Route::post('/admin/bookings/slots', [AdminBookingController::class, 'createTimeSlot']);
+    //update booking timeslot
+    Route::put('/admin/bookings/slots/{bookingId}', [AdminBookingController::class, 'updateTimeSlot']);
 
 });

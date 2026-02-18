@@ -87,4 +87,47 @@ class AdminBookingController extends Controller
             'slot' => $slot,
         ], 201);
     }
+
+    /**
+     * Admin: Update timeslot
+     * PUT /api/v1/admin/bokings/slots/{booking_id}
+     */
+    public function updateTimeSlot(Request $request, $booking_id)
+    {
+        //get data from database
+        $slot = Booking::find($booking_id);
+
+        if (!$slot) {
+            return response()->json([
+                'message' => 'Time slot not found'
+            ], 404);
+        }
+
+        //validate the data
+        $validated = $request->validate([
+            'time_slot_start' => 'required|date|after:now',
+            'time_slot_end'   => 'required|date|after:time_slot_start',
+        ]);
+
+        //Look for overlapping
+        $overlap = Booking::where('booking_id', '!=', $booking_id)
+            ->where('time_slot_start', '<', $validated['time_slot_end'])
+            ->where('time_slot_end', '>', $validated['time_slot_start'])
+            ->exists();
+
+        if ($overlap) {
+            return response()->json([
+                'message' => 'Timeslot overlaps with existing timeslot or already exists'
+            ], 422);
+        }
+
+        //update timeslot
+        $slot->update($validated);
+
+        //if update was successful, send message
+        return response()->json([
+            'message' => 'Time slot updated',
+            'slot'    => $slot
+        ], 200);
+    }
 }
