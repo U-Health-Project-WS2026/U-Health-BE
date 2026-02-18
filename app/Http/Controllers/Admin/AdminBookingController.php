@@ -94,15 +94,8 @@ class AdminBookingController extends Controller
      */
     public function updateTimeSlot(Request $request, $booking_id)
     {
-        //get data from database
-        $slot = Booking::find($booking_id);
-
-        //if data doesnt exist return error message
-        if (!$slot) {
-            return response()->json([
-                'message' => 'Time slot not found'
-            ], 404);
-        }
+        //get data from database if exists
+        $slot = Booking::findOrFail($booking_id);
 
         //validate the data
         $validated = $request->validate([
@@ -138,15 +131,8 @@ class AdminBookingController extends Controller
      */
     public function deleteTimeSlot($booking_id)
     {
-        //get data from database
-        $slot = Booking::find($booking_id);
-
-        //if data doesnt exist return error message
-        if (!$slot) {
-            return response()->json([
-                'message' => 'Time slot was not found'
-            ], 404);
-        }
+        //get data from database if exists
+        $slot = Booking::findOrFail($booking_id);
 
         //delete data
         $slot->delete();
