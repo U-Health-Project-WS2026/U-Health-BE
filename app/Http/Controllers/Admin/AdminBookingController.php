@@ -35,7 +35,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Create available timeslot
-     * POST api/v1/admin/bookings/slots
+     * POST api/v1/bookings
      */
     public function createTimeSlot(Request $request)
     {
@@ -74,7 +74,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Update timeslot
-     * PUT /api/v1/admin/bokings/slots/{booking_id}
+     * PUT /api/v1/bookings/{booking_id}
      */
     public function updateTimeSlot(Request $request, $booking_id)
     {
@@ -111,7 +111,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Delete time-slot
-     * DELETE /api/v1/admin/bookings/slots/{booking_id}
+     * DELETE /api/v1/bookings/{booking_id}
      */
     public function deleteTimeSlot($booking_id)
     {
@@ -126,4 +126,19 @@ class AdminBookingController extends Controller
             'message' => 'Time slot successfully deleted'
         ], 200);
     }
+
+    /**
+     * Admin: View booked timeslots
+     * GET /api/v1/bookings
+     */
+    public function viewBookedTimeSlots()
+    {
+        //show the time slots with status 1=booked, ordered by time_slot_start
+        $bookedTimeSlots = Booking::where('status',1)
+            ->orderBy('time_slot_start', 'asc')
+            ->get();
+
+        return response()->json($bookedTimeSlots);
+    }
+
 }
