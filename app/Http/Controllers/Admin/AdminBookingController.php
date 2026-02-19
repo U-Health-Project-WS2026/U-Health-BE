@@ -139,7 +139,7 @@ class AdminBookingController extends Controller
             ->orderBy('time_slot_start')
             ->get();
 
-        return response()->json($bookedTimeSlots);
+        return AdminBookingResource::collection($bookedTimeSlots);
     }
 
 }
