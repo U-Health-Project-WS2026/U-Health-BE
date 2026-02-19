@@ -15,14 +15,17 @@ return new class extends Migration
         {
 
             $table->id('booking_id');
-            $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('patient_id')->nullable(); //since an available timeslot has no patient that booked it
             $table->dateTime('time_slot_start');
             $table->dateTime('time_slot_end');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status'); // 0=available, 1=booked
             $table->timestamps();
 
             $table->foreign('patient_id')
                 ->references('patient_id')->on('patients');
+
+            //no duplicate timeslots
+            $table->unique(['time_slot_start', 'time_slot_end']);
         }
         );
     }
