@@ -134,11 +134,12 @@ class AdminBookingController extends Controller
     public function viewBookedTimeSlots()
     {
         //show the time slots with status 1=booked, ordered by time_slot_start
-        $bookedTimeSlots = Booking::where('status',1)
-            ->orderBy('time_slot_start', 'asc')
+        $bookedTimeSlots = Booking::where('status', 1)
+            ->where('time_slot_start', '>=', now())
+            ->orderBy('time_slot_start')
             ->get();
 
-        return response()->json($bookedTimeSlots);
+        return AdminBookingResource::collection($bookedTimeSlots);
     }
 
 }
