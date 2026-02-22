@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminPatientController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminBookingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminDiseaseController;
 
 Route::middleware(['auth:sanctum']) //User must be auth and admin
 ->prefix('admin') //api request begins with admin/...
@@ -38,5 +39,14 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //DELETE-REQUESTS
     //delete booking timeslot
     Route::delete('bookings/{booking_id}', [AdminBookingController::class, 'deleteTimeSlot']);
+
+    Route::get('diseases', [AdminDiseaseController::class, 'index']);
+    Route::post('diseases', [AdminDiseaseController::class, 'store']);
+    Route::get('diseases/{id}', [AdminDiseaseController::class, 'show']);
+    Route::match(['put', 'patch'], 'diseases/{id}', [AdminDiseaseController::class, 'update']);
+    Route::delete('diseases/{id}', [AdminDiseaseController::class, 'destroy']);
+
+
+
 
 });
