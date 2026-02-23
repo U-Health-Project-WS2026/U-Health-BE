@@ -41,3 +41,5 @@ Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke
 Route::post('/logout', [LoginController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+//Text
