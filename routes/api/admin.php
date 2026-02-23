@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminPatientController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminBookingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminDiseaseController;
 use App\Http\Controllers\Admin\AdminMedicationController;
 
 Route::middleware(['auth:sanctum']) //User must be auth and admin
@@ -39,6 +40,5 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //DELETE-REQUESTS
     //delete booking timeslot
     Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
-
 
 });
