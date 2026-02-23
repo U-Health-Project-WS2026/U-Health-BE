@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDiseaseController;
+use App\Http\Controllers\Admin\AdminMedicationController;
 
 Route::middleware(['auth:sanctum']) //User must be auth and admin
 ->prefix('admin') //api request begins with admin/...
@@ -22,7 +23,7 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     Route::get('bookings', [AdminBookingController::class, 'index']);
 
     //get bookings from a specific user/patient
-    Route::get('bookings/patient/{patientId}', [AdminBookingController::class, 'byPatient']);
+    Route::get('bookings/patient/{id}', [AdminBookingController::class, 'byPatient']);
 
     //view booked timeslots
     Route::get('bookings/booked', [AdminBookingController::class, 'viewBookedTimeSlots']);
@@ -34,19 +35,10 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
 
     //PUT-REQUESTS
     //update booking timeslot
-    Route::put('bookings/{booking_id}', [AdminBookingController::class, 'updateTimeSlot']);
+    Route::put('bookings/{id}', [AdminBookingController::class, 'updateTimeSlot']);
 
     //DELETE-REQUESTS
     //delete booking timeslot
-    Route::delete('bookings/{booking_id}', [AdminBookingController::class, 'deleteTimeSlot']);
-
-    Route::get('diseases', [AdminDiseaseController::class, 'index']);
-    Route::post('diseases', [AdminDiseaseController::class, 'store']);
-    Route::get('diseases/{id}', [AdminDiseaseController::class, 'show']);
-    Route::match(['put', 'patch'], 'diseases/{id}', [AdminDiseaseController::class, 'update']);
-    Route::delete('diseases/{id}', [AdminDiseaseController::class, 'destroy']);
-
-
-
+    Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
 
 });
