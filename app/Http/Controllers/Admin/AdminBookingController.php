@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminBookingResource;
 use App\Models\Booking;
+use Illuminate\Http\Request;
 
 class AdminBookingController extends Controller
 {
@@ -34,19 +35,112 @@ class AdminBookingController extends Controller
     }
 
     /**
-     * Admin: eine Buchung löschen.
-     * DELETE /api/v1/admin/bookings/{bookingId}
+     * Admin: Create available timeslot
+     * POST api/v1/bookings
      */
-    public function destroy(int $bookingId)
+    public function createTimeSlot(Request $request)
     {
-        $booking = Booking::find($bookingId);
+        //Validating the data thats being send
+        $validated = $request->validate([
+            'time_slot_start' => 'required|date|after:now',
+            'time_slot_end' => 'required|date|after:time_slot_start',
+        ]);
 
-        if (! $booking) {
-            return response()->json(['message' => 'Booking not found'], 404);
+        //Looking for duplicates or overlaps of other timeslots
+        $overlap = Booking::where('time_slot_start', '<', $validated['time_slot_end'])
+            ->where('time_slot_end','>',$validated['time_slot_start'])
+            ->exists();
+
+        //Error Message if overlapping exists
+        if ($overlap) {
+            return response()->json([
+                'message' => 'Timeslot overlaps with existing timeslot or already exists'
+            ], 422);
         }
 
-        $booking->delete();
+        //Create new timeslot with the following attributes
+        $slot = Booking::create([
+            'patient_id' => null,
+            'time_slot_start' => $validated['time_slot_start'],
+            'time_slot_end' => $validated['time_slot_end'],
+            'status' => 0,
+        ]);
 
-        return response()->json(['message' => 'Booking deleted']);
+        //Message if creation was successfully
+        return response()->json([
+            'message' => 'Timeslot successfully created',
+            'slot' => $slot,
+        ], 201);
     }
+
+    /**
+     * Admin: Update timeslot
+     * PUT /api/v1/bookings/{booking_id}
+     */
+    public function updateTimeSlot(Request $request, $booking_id)
+    {
+        //get data from database if exists
+        $slot = Booking::findOrFail($booking_id);
+
+        //validate the data
+        $validated = $request->validate([
+            'time_slot_start' => 'required|date|after:now',
+            'time_slot_end'   => 'required|date|after:time_slot_start',
+        ]);
+
+        //Look for overlapping
+        $overlap = Booking::where('booking_id', '!=', $booking_id)
+            ->where('time_slot_start', '<', $validated['time_slot_end'])
+            ->where('time_slot_end', '>', $validated['time_slot_start'])
+            ->exists();
+
+        if ($overlap) {
+            return response()->json([
+                'message' => 'Timeslot overlaps with existing timeslot or already exists'
+            ], 422);
+        }
+
+        //update timeslot
+        $slot->update($validated);
+
+        //if update was successful, send message
+        return response()->json([
+            'message' => 'Time slot updated',
+            'slot'    => $slot
+        ], 200);
+    }
+
+    /**
+     * Admin: Delete time-slot
+     * DELETE /api/v1/bookings/{booking_id}
+     */
+    public function deleteTimeSlot($booking_id)
+    {
+        //get data from database if exists
+        $slot = Booking::findOrFail($booking_id);
+
+        //delete data
+        $slot->delete();
+
+        //if deletion was successful, return message
+        return response()->json([
+            'message' => 'Time slot successfully deleted'
+        ], 200);
+    }
+
+    /**
+     * Admin: View booked timeslots
+     * GET /api/v1/bookings
+     */
+    public function viewBookedTimeSlots()
+    {
+        //show the time slots with status 1=booked, ordered by time_slot_start
+        $bookedTimeSlots = Booking::where('status', 1)
+            ->where('time_slot_start', '>=', now())
+            ->orderBy('time_slot_start')
+            ->get();
+
+        return AdminBookingResource::collection($bookedTimeSlots);
+    }
+
 }

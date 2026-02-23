@@ -14,6 +14,8 @@ class Booking extends Model
          'time_slot_start',
          'time_slot_end',
          'status',
+        // 0=available
+        // 1=booked
      ];
 
 

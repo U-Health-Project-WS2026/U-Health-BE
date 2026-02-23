@@ -15,16 +15,30 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     Route::get('patients/{id}', [AdminPatientController::class, 'show']);
     Route::delete('patients/{id}', [AdminPatientController::class, 'destroy']);
 
+
+    //BOOKINGS
+    //GET-REQUESTS
+    //get ALL BOOKINGS - WETHER booked OR NOT
     Route::get('bookings', [AdminBookingController::class, 'index']);
-    Route::get('bookings/patient/{patientId}', [AdminBookingController::class, 'byPatient']);
-    Route::delete('bookings/{bookingId}', [AdminBookingController::class, 'destroy']);
 
-    Route::get('medications', [AdminMedicationController::class, 'index']);
-    Route::post('medications', [AdminMedicationController::class, 'store']);
-    Route::get('medications/{id}', [AdminMedicationController::class, 'show']);
-    Route::match(['put', 'patch'], 'medications/{id}', [AdminMedicationController::class, 'update']);
-    Route::delete('medications/{id}', [AdminMedicationController::class, 'destroy']);
+    //get bookings from a specific user/patient
+    Route::get('bookings/patient/{id}', [AdminBookingController::class, 'byPatient']);
 
+    //view booked timeslots
+    Route::get('bookings/booked', [AdminBookingController::class, 'viewBookedTimeSlots']);
+
+
+    //POST/CREATE-REQUESTS
+    //create booking timeslot
+    Route::post('bookings', [AdminBookingController::class, 'createTimeSlot']);
+
+    //PUT-REQUESTS
+    //update booking timeslot
+    Route::put('bookings/{id}', [AdminBookingController::class, 'updateTimeSlot']);
+
+    //DELETE-REQUESTS
+    //delete booking timeslot
+    Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
 
 
 });
