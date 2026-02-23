@@ -11,34 +11,42 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
 ->prefix('admin') //api request begins with admin/...
 ->group(function(){
 
-    //default
+    //PATIENTS
+    //Get ALL patients
     Route::get('patients', [AdminPatientController::class, 'index']);
+
+    //Get a specific patients
     Route::get('patients/{id}', [AdminPatientController::class, 'show']);
+
+    //Delete a specific patient
     Route::delete('patients/{id}', [AdminPatientController::class, 'destroy']);
 
 
     //BOOKINGS
-    //GET-REQUESTS
-    //get ALL BOOKINGS - WETHER booked OR NOT
+    //get ALL BOOKINGS from past and future - WETHER booked OR NOT
     Route::get('bookings', [AdminBookingController::class, 'index']);
 
     //get bookings from a specific user/patient
     Route::get('bookings/patient/{id}', [AdminBookingController::class, 'byPatient']);
 
-    //view booked timeslots
+    //get ALL BOOKED Slots from NOW - Future // NOT BOOKINGS FROM PAST
     Route::get('bookings/booked', [AdminBookingController::class, 'viewBookedTimeSlots']);
 
-
-    //POST/CREATE-REQUESTS
-    //create booking timeslot
+    //create new timeslot
     Route::post('bookings', [AdminBookingController::class, 'createTimeSlot']);
 
-    //PUT-REQUESTS
     //update booking timeslot
     Route::put('bookings/{id}', [AdminBookingController::class, 'updateTimeSlot']);
 
-    //DELETE-REQUESTS
     //delete booking timeslot
     Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
 
+
+    //MEDICATION
+    //GET ALL Medications, GET One (by ID), Create new Medication, Patch a Medication, Delete Medication (by ID)
+    Route::apiResource('medications', AdminMedicationController::class);
+
+    //DISEASES
+    //GET ALL Diseases, GET One (by ID), Create new Disease, Patch a Disease, Delete Disease (by ID)
+    Route::apiResource('diseases', AdminDiseaseController::class);
 });
