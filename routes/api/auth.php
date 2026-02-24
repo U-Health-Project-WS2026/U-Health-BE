@@ -38,8 +38,8 @@ Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke
 //     ->middleware(['auth', 'throttle:6,1'])
 //     ->name('verification.send');
 
-Route::post('/logout', [LoginController::class, 'destroy'])
-    ->middleware('auth')
+Route::post('/logout', [LoginController::class, 'logout'])
+    ->middleware('auth:sanctum')
     ->name('logout');
 
 //Text
