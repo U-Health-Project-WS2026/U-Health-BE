@@ -41,7 +41,7 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //delete booking timeslot
     Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
 
-    //Search the booked timeslot by patient name or id
+    //Search the booked timeslot by patient name
     Route::get('bookings/search', [AdminBookingController::class, 'searchBookedTimeSlots']);
 
 
