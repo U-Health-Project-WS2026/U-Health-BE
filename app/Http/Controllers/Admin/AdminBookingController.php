@@ -143,4 +143,26 @@ class AdminBookingController extends Controller
         return AdminBookingResource::collection($bookedTimeSlots);
     }
 
+    /**
+     * Admin: search booked timeslots by first- or lastname
+     * GET /api/v1/bookings/search
+     */
+    public function searchBookedTimeSlots(Request $request)
+    {
+        //take query parameter from url
+        $name = $request->query('name');
+
+        //search after timeslots with status=1, by patients first- or last_name
+        $bookedSlots = Booking::with('patients')
+            ->where('status', 1)
+            ->whereHas('patients', function ($query) use ($name) {
+                $query->where('first_name', 'like', "%{$name}%")
+                    ->orWhere('last_name', 'like', "%{$name}%");
+            })
+            ->orderBy('time_slot_start', 'asc')
+            ->get();
+
+        return AdminBookingResource::collection($bookedSlots);
+    }
+
 }
