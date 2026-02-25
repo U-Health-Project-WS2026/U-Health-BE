@@ -48,9 +48,9 @@ class LoginController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    public function logout(LoginRequest $request)
+    public function logout(Request $request)
     {
-        $request->validated();
+        
         $request->user()->tokens()->delete();
 
         return response()->noContent();
