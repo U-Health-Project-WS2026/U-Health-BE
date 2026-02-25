@@ -12,7 +12,7 @@ class PatientTreatmentController extends Controller
 
     /**
      * Patient: view entire treatment history
-     * GET /api/v1/patients/treatments/history
+     * GET /api/v1/patients/treatments
      */
     public function viewTreatmentHistory(Request $request)
     {
