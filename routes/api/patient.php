@@ -19,9 +19,7 @@ Route::middleware('auth:sanctum') //User must be auth
 
     //show entire patient history
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('treatments/history', [PatientTreatmentController::class, 'viewTreatmentHistory']);
-    });
+    Route::get('treatments/history', [PatientTreatmentController::class, 'viewTreatmentHistory']);
 
     //personal Infos
     Route::get('me', [PatientController::class, 'show_my_info']);
