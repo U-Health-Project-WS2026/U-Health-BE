@@ -16,7 +16,7 @@ class TreatmentResource extends JsonResource
     {
         return [
             'treatment_id'=>$this->treatment_id,
-            'patient_id'=>$this->patient_id,
+            'patients'=>$this->patients,
             'diagnosis'=>$this->diagnosis,
             'type_of_treatment'=>$this->type_of_treatment,
             'date_of_treatment'=>$this->date_of_treatment

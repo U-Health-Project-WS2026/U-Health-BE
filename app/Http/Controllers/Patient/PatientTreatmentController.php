@@ -39,11 +39,17 @@ class PatientTreatmentController extends Controller
             'date_of_treatment' => 'required|date'
         ]);
 
+        //get current user
+        $user = $request->user();
+
+        $patientId = $user->patients->patient_id;
+
         //get date from the url
         $date = $request->query('date_of_treatment');
 
         //searches for date_of_treatment(only day), ordered by date_of_treatment
-        $treatments = Treatment::whereDate('date_of_treatment', $date)
+        $treatments = Treatment::where('patient_id', $patientId)
+            ->whereDate('date_of_treatment', $date)
             ->orderBy('date_of_treatment', 'asc')
             ->get();
 
