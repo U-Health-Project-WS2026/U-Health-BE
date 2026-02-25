@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Patient\PatientController;
 use App\Http\Controllers\Patient\PatientBookingController;
+use App\Http\Controllers\Patient\PatientTreatmentController;
 
 
 Route::middleware('auth:sanctum') //User must be auth
@@ -14,7 +15,13 @@ Route::middleware('auth:sanctum') //User must be auth
     Route::get('bookings', [PatientBookingController::class, 'viewBookedTimeSlots']);
 
     //search treatment by date
-    Route::get('treatments/date', [\App\Http\Controllers\Patient\PatientTreatmentController::class, 'searchTreatmentDate']);
+    Route::get('treatments/date', [PatientTreatmentController::class, 'searchTreatmentDate']);
+
+    //show entire patient history
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('treatments/history', [PatientTreatmentController::class, 'viewTreatmentHistory']);
+    });
 
     //personal Infos
     Route::get('me', [PatientController::class, 'show_my_info']);
