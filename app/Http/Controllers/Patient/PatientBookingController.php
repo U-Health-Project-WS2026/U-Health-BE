@@ -73,4 +73,19 @@ class PatientBookingController extends Controller
         return "Appointment was canceled";
 
     }
+
+    public function myBookedTimeSlots(Request $request)
+    {
+        //get current user
+        $user = $request->user();
+
+
+        //show the time slots with status 1=booked, ordered by time_slot_start
+        $bookedTimeSlots = $user->patients->bookings()
+            ->where('status', 1)
+            ->orderBy('time_slot_start')
+            ->get();
+
+        return AdminBookingResource::collection($bookedTimeSlots);
+    }
 }
