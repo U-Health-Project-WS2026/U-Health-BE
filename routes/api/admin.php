@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminPatientController;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDiseaseController;
 use App\Http\Controllers\Admin\AdminMedicationController;
+use App\Http\Controllers\Admin\AdminTreatmentController;
 
 Route::middleware(['auth:sanctum']) //User must be auth and admin
 ->prefix('admin') //api request begins with admin/...
@@ -49,4 +49,19 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //DISEASES
     //GET ALL Diseases, GET One (by ID), Create new Disease, Patch a Disease, Delete Disease (by ID)
     Route::apiResource('diseases', AdminDiseaseController::class);
+
+
+    //Treatments
+    // 1) Create
+    Route::post('/treatments', [AdminTreatmentController::class, 'store']);
+
+    // 2) Update
+    Route::patch('/treatments/{treatment}', [AdminTreatmentController::class, 'update']);
+
+    // 3) Search by date
+    Route::get('/treatments/search/by-date', [AdminTreatmentController::class, 'searchByDate']);
+
+    // 4) History by patient id
+    Route::get('/patients/{patientId}/treatments', [AdminTreatmentController::class, 'historyByPatient']);
+
 });
