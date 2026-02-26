@@ -18,6 +18,10 @@ Route::post('/login', [LoginController::class, 'store'])
     ->middleware('guest')
     ->name('login');
 
+Route::post('/change-current-password',[NewPasswordController::class, 'change_password'])
+    ->middleware('auth:sanctum')
+    ->name('password.new');
+
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
     ->middleware('guest')
     ->name('password.email');

@@ -16,7 +16,7 @@ class NewPasswordController extends Controller
 {
     /**
      * Handle an incoming new password request.
-     *
+     * If a user wants forgot his password
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): JsonResponse
@@ -49,5 +49,35 @@ class NewPasswordController extends Controller
         }
 
         return response()->json(['status' => __($status)]);
+    }
+
+
+    public function change_password(Request $request){
+        $request->validate([
+            "current_password"=> ["required", "string"],
+            "password" => ["required", "string", Rules\Password::defaults()]
+        ]);
+
+        $user = $request->user();
+
+        //Check if current password is correct
+        if(!Hash::check($request->input('current_password'), $user->password)){
+            throw ValidationException::withMessages([
+                'current_password' => ['Your current password is wrong']
+            ]);
+        }
+        //Check if new password equals old password
+        if(Hash::check($request->input("password"), $user->password)){
+            throw ValidationException::withMessages([
+                'current_password' => ['New Password can not be the same as the old password']
+            ]);
+        };
+
+        //Else
+        $user->forceFill([
+            'password' => Hash::make($request->input('password')),
+        ])->save();
+
+        return response()->json(['status' => 'password-updated']);
     }
 }
