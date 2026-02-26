@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDiseaseController;
 use App\Http\Controllers\Admin\AdminMedicationController;
+use App\Http\Controllers\Admin\AdminTreatmentController;
 
 Route::middleware(['auth:sanctum']) //User must be auth and admin
 ->prefix('admin') //api request begins with admin/...
@@ -44,7 +45,12 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //delete booking timeslot
     Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
 
+    //TREATMENT
+    //get all treatments
+    Route::get('treatments', [AdminTreatmentController::class, 'index']);
 
+    //create a treatment with the disease and medication, find an disease_id or medication_id by its name and create the pivot table
+    Route::post('treatments', [AdminTreatmentController::class, 'store']);
 
 
     //MEDICATION
