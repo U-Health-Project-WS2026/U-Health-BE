@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminTreatmentController;
 use App\Http\Controllers\Admin\AdminPatientController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminBookingController;
@@ -54,4 +55,10 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //DISEASES
     //GET ALL Diseases, GET One (by ID), Create new Disease, Patch a Disease, Delete Disease (by ID)
     Route::apiResource('diseases', AdminDiseaseController::class);
+
+
+    Route::get('furzen', [AdminTreatmentController::class, 'find_medication_id']);
+    Route::post('treatments', [AdminTreatmentController::class, 'store']);
+    Route::get('treatments', [AdminTreatmentController::class, 'index']);
+
 });
