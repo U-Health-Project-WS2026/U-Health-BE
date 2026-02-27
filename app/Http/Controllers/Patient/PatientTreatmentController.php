@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Patient;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TreatmentResource;
 use App\Models\Treatment;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class PatientTreatmentController extends Controller
@@ -16,16 +17,16 @@ class PatientTreatmentController extends Controller
      */
     public function viewTreatmentHistory(Request $request)
     {
-        //get current user
-        $user = $request->user();
+        $patientId = $request->user()->patients->patient_id;
 
         //get treatments of patient with the user_id, ordered by date_of_treatment
-        $treatments = $user->patients
-            ->treatments()
-            ->orderBy('date_of_treatment', 'desc')
+        $treatments = Treatment::with(['diseases', 'medications'])
+            ->where('patient_id', $patientId)
             ->get();
 
-        return TreatmentResource::collection($treatments);
+        return response()->json([
+            "data"=>$treatments
+        ], 200);
     }
 
     /**
@@ -48,7 +49,8 @@ class PatientTreatmentController extends Controller
         $date = $request->query('date_of_treatment');
 
         //searches for date_of_treatment(only day), ordered by date_of_treatment
-        $treatments = Treatment::where('patient_id', $patientId)
+        $treatments = Treatment::with(['diseases', 'medications'])
+            ->where('patient_id', $patientId)
             ->whereDate('date_of_treatment', $date)
             ->orderBy('date_of_treatment', 'asc')
             ->get();
