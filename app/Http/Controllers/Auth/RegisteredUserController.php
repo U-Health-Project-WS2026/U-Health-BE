@@ -22,9 +22,19 @@ class RegisteredUserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
+        
         //request get validated
         $data = $request->validated();
+        
+        //check if email or username are in use
+        if(User::where('email', $data['email'])->exists() || 
+           User::where('username', $data['username'])->exists()){
+            return response()->json([
+                "message"=>"Email or Username is in use. Try another Email",
+            ],409);
+        }
 
+        
         //user based credentials get extracted
         $userData = [
             'username' => $data['username'],

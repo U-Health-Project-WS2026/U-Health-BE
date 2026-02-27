@@ -32,6 +32,9 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //get ALL BOOKED Slots from NOW - Future // NOT BOOKINGS FROM PAST
     Route::get('bookings/booked', [AdminBookingController::class, 'viewBookedTimeSlots']);
 
+    //Search the booked timeslot by patient name - QUERY ?name=
+    Route::get('bookings/search', [AdminBookingController::class, 'searchBookedTimeSlots']);
+
     //create new timeslot
     Route::post('bookings', [AdminBookingController::class, 'createTimeSlot']);
 
@@ -40,6 +43,13 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
 
     //delete booking timeslot
     Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
+
+    //TREATMENT
+    //get all treatments
+    Route::get('treatments', [AdminTreatmentController::class, 'index']);
+
+    //create a treatment with the disease and medication, find an disease_id or medication_id by its name and create the pivot table
+    Route::post('treatments', [AdminTreatmentController::class, 'store']);
 
 
     //MEDICATION
