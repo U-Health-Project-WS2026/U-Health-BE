@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
 use App\Models\Treatment;
+use App\Models\Disease;
+use App\Models\Medication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
