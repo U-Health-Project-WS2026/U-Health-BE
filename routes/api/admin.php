@@ -19,6 +19,9 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //Get a specific patients
     Route::get('patients/{id}', [AdminPatientController::class, 'show']);
 
+    //Update Information of a patient
+    Route::put('patients/{id}', [AdminPatientController::class, 'updatePatient']);
+
     //Delete a specific patient
     Route::delete('patients/{id}', [AdminPatientController::class, 'destroy']);
 
