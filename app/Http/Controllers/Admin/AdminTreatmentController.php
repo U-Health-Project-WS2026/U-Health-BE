@@ -14,10 +14,11 @@ class AdminTreatmentController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
-        return Treatment::all();
+        return Treatment::with(['diseases', 'medications'])->get();
     }
 
 
@@ -118,6 +119,8 @@ class AdminTreatmentController extends Controller
 
     /**
      * Display the specified resource.
+     * @param string $id
+     * @return void
      */
     public function show(string $id)
     {
@@ -208,6 +211,8 @@ class AdminTreatmentController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param string $id
+     * @return void
      */
     public function destroy(string $id)
     {
