@@ -213,10 +213,20 @@ class AdminTreatmentController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param string $id
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id)
     {
-        //
+        $treatment = Treatment::findOrFail($id);
+
+    // Pivot-Beziehungen lösen
+    $treatment->diseases()->detach();
+    $treatment->medications()->detach();
+
+    // Behandlung löschen
+    $treatment->delete();
+
+        return response()->json([
+            'message' => 'success, Behandlung erfolgreich gelöscht.']);
     }
 }
