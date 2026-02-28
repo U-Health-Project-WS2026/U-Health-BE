@@ -213,7 +213,7 @@ class AdminTreatmentController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param string $id
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id)
     {
@@ -226,8 +226,7 @@ class AdminTreatmentController extends Controller
     // Behandlung löschen
     $treatment->delete();
 
-    return redirect()
-        ->route('treatments.index')
-        ->with('success', 'Behandlung erfolgreich gelöscht.');
+        return response()->json([
+            'message' => 'success, Behandlung erfolgreich gelöscht.']);
     }
 }
