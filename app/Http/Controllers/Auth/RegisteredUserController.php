@@ -17,24 +17,24 @@ class RegisteredUserController extends Controller
 {
     /**
      * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @param RegisterRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(RegisterRequest $request)
     {
-        
+
         //request get validated
         $data = $request->validated();
-        
+
         //check if email or username are in use
-        if(User::where('email', $data['email'])->exists() || 
+        if(User::where('email', $data['email'])->exists() ||
            User::where('username', $data['username'])->exists()){
             return response()->json([
                 "message"=>"Email or Username is in use. Try another Email",
             ],409);
         }
 
-        
+
         //user based credentials get extracted
         $userData = [
             'username' => $data['username'],
@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($data['password']),
         ];
         $user = User::create($userData);
-        
+
         //patient based credentials get extracted
         $patientData = [
             'user_id' => $user->id,
@@ -52,7 +52,7 @@ class RegisteredUserController extends Controller
             'sex'        => $data['sex'],
             'location'   => $data['location'],
         ];
-        
+
         //a new patient related to the user created above gets created
         $user->patients()->create($patientData);
 

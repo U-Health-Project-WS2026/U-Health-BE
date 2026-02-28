@@ -51,6 +51,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_confirmed_at' => 'datetime',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function patients(){
     return $this->hasOne(Patient::class, 'user_id', 'user_id');
     }

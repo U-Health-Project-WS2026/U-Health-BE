@@ -12,6 +12,8 @@ class AdminDiseaseController extends Controller
     /**
      * GET /api/v1/admin/diseases?q=flu
      * List + Search (name/description/icd_code)
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(Request $request)
     {
@@ -33,6 +35,8 @@ class AdminDiseaseController extends Controller
     /**
      * POST /api/v1/admin/diseases
      * Create new disease
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -52,6 +56,8 @@ class AdminDiseaseController extends Controller
 
     /**
      * GET /api/v1/admin/diseases/{id}
+     * @param int $id
+     * @return AdminDiseaseResource
      */
     public function show(int $id)
     {
@@ -62,6 +68,9 @@ class AdminDiseaseController extends Controller
 
     /**
      * PUT/PATCH /api/v1/admin/diseases/{id}
+     * @param Request $request
+     * @param int $id
+     * @return AdminDiseaseResource
      */
     public function update(Request $request, int $id)
     {
@@ -80,6 +89,8 @@ class AdminDiseaseController extends Controller
 
     /**
      * DELETE /api/v1/admin/diseases/{id}
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
     {

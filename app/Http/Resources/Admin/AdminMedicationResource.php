@@ -6,6 +6,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdminMedicationResource extends JsonResource
 {
+    /**
+     * @param $request
+     * @return array
+     */
     public function toArray($request)
     {
         return [

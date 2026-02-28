@@ -12,6 +12,7 @@ class AdminPatientController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -20,6 +21,8 @@ class AdminPatientController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -28,6 +31,8 @@ class AdminPatientController extends Controller
 
     /**
      * Display the specified resource.
+     * @param string $id
+     * @return PatientResource
      */
     public function show(string $id)
     {
@@ -37,6 +42,9 @@ class AdminPatientController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Request $request
+     * @param string $patient_id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updatePatient(Request $request, string $patient_id)
     {
@@ -64,6 +72,8 @@ class AdminPatientController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(string $id)
     {

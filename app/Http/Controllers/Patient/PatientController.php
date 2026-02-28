@@ -10,17 +10,21 @@ class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param Request $request
+     * @return PatientResource
      */
     public function show_my_info(Request $request)
     {
         //token based searching for user and than patient
         $user = $request->user();
         return new PatientResource(Patient::findOrFail($user->user_id));
-        
+
     }
 
     /**
      * Store a newly created resource in storage.
+     * @param Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -29,6 +33,8 @@ class PatientController extends Controller
 
     /**
      * Display the specified resource.
+     * @param string $id
+     * @return void
      */
     public function show(string $id)
     {
@@ -37,6 +43,9 @@ class PatientController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param Request $request
+     * @param string $id
+     * @return void
      */
     public function update(Request $request, string $id)
     {
@@ -45,6 +54,8 @@ class PatientController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function delete_my_account(Request $request)
     {
@@ -55,7 +66,7 @@ class PatientController extends Controller
         $user->delete();
 
         return response()->json([
-           "message"=>"Account erfolgreich gelöscht" 
+           "message"=>"Account erfolgreich gelöscht"
         ]);
     }
 }

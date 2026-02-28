@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 class AdminMedicationController extends Controller
 {
     // GET /api/v1/admin/medications?q=ibu
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function index(Request $request)
     {
         $q = $request->query('q');
@@ -27,6 +31,10 @@ class AdminMedicationController extends Controller
     }
 
     // POST /api/v1/admin/medications
+    /**
+     * @param Request $request
+     * @return AdminMedicationResource
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -40,6 +48,10 @@ class AdminMedicationController extends Controller
     }
 
     // GET /api/v1/admin/medications/{id}
+    /**
+     * @param int $id
+     * @return AdminMedicationResource
+     */
     public function show(int $id)
     {
         $med = Medication::findOrFail($id);
@@ -47,6 +59,11 @@ class AdminMedicationController extends Controller
     }
 
     // PUT/PATCH /api/v1/admin/medications/{id}
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return AdminMedicationResource
+     */
     public function update(Request $request, int $id)
     {
         $med = Medication::findOrFail($id);
@@ -62,6 +79,10 @@ class AdminMedicationController extends Controller
     }
 
     // DELETE /api/v1/admin/medications/{id}
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(int $id)
     {
         $med = Medication::findOrFail($id);

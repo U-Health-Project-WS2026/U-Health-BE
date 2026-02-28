@@ -18,7 +18,9 @@ class Booking extends Model
         // 1=booked
      ];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function patients(){
         return $this->belongsTo(Patient::class, 'patient_id','patient_id');
     }

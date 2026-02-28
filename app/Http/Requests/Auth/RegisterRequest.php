@@ -8,6 +8,7 @@ class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     * @return bool
      */
     public function authorize(): bool
     {
@@ -16,8 +17,7 @@ class RegisterRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array
      */
     public function rules(): array
     {
@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
             'username'=>['required', 'string', 'max:255'],
             'email' => ['required', 'email:rfc,dns'],
             'password' => ['required','confirmed', Password::defaults()],
-            
+
             //Patient credentials confirm
             'first_name'=>['required', 'string', 'max:20'],
             'last_name'=>['required', 'string', 'max:20'],
