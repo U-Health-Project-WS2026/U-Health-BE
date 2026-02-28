@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\AdminDiseaseController;
 use App\Http\Controllers\Admin\AdminMedicationController;
 use App\Http\Controllers\Admin\AdminTreatmentController;
 
-Route::middleware(['auth:sanctum']) //User must be auth and admin
+Route::middleware(['auth:sanctum', 'is_admin']) //User must be auth and admin
 ->prefix('admin') //api request begins with admin/...
 ->group(function(){
 
