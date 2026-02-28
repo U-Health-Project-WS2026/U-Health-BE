@@ -38,9 +38,28 @@ class AdminPatientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updatePatient(Request $request, string $patient_id)
     {
-        //
+        //get data from database if exists
+        $slot = Patient::findOrFail($patient_id);
+
+        //validate the data
+        $validated = $request->validate([
+            'first_name' => ['sometimes', 'required', 'string', 'max:255'],
+            'last_name' => ['sometimes', 'required', 'string', 'max:255'],
+            'age' => ['sometimes', 'required', 'integer'],
+            'sex' => ['sometimes', 'required', 'integer'],
+            'location' => ['sometimes', 'required', 'string', 'max:255']
+        ]);
+
+        //update timeslot
+        $slot->update($validated);
+
+        //if update was successful, send message
+        return response()->json([
+            'message' => 'patient information updated',
+            'slot'    => $slot
+        ], 200);
     }
 
     /**

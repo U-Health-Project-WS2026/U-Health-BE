@@ -11,7 +11,8 @@ class AdminBookingController extends Controller
 {
     /**
      * Admin: alle Buchungen (History) sehen.
-     * GET /api/v1/admin/bookings
+     * GET bookings
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -21,22 +22,10 @@ class AdminBookingController extends Controller
     }
 
     /**
-     * Admin: Buchungshistorie eines bestimmten Patienten.
-     * GET /api/v1/admin/bookings/patient/{patientId}
-     */
-    public function byPatient(int $patientId)
-    {
-        $bookings = Booking::with('patients')
-            ->where('patient_id', $patientId)
-            ->orderBy('time_slot_start', 'desc')
-            ->get();
-
-        return AdminBookingResource::collection($bookings);
-    }
-
-    /**
      * Admin: Create available timeslot
-     * POST api/v1/bookings
+     * POST bookings
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function createTimeSlot(Request $request)
     {
@@ -75,7 +64,10 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Update timeslot
-     * PUT /api/v1/bookings/{booking_id}
+     * PUT bookings/{booking_id}
+     * @param Request $request
+     * @param $booking_id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateTimeSlot(Request $request, $booking_id)
     {
@@ -112,7 +104,9 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Delete time-slot
-     * DELETE /api/v1/bookings/{booking_id}
+     * DELETE bookings/{booking_id}
+     * @param $booking_id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function deleteTimeSlot($booking_id)
     {
@@ -130,7 +124,8 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: View booked timeslots
-     * GET /api/v1/bookings
+     * GET bookings/booked
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function viewBookedTimeSlots()
     {
@@ -145,9 +140,11 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: search booked timeslots by first- or lastname
-     * GET /api/v1/bookings/search
+     * GET bookings/search
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function searchBookedTimeSlots(Request $request)
+    public function searchBookingByName(Request $request)
     {
         //take query parameter from url
         $name = $request->query('name');
@@ -165,4 +162,19 @@ class AdminBookingController extends Controller
         return AdminBookingResource::collection($bookedSlots);
     }
 
+    /**
+     * Admin: search booked timeslots by patient id
+     * GET bookings/search/{id}
+     * @param $patient_id
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function searchByPatientID($patient_id)
+    {
+        $bookings = Booking::where('patient_id', $patient_id)
+            ->where('status', 1)
+            ->orderBy('time_slot_start', 'desc')
+            ->get();
+
+        return AdminBookingResource::collection($bookings);
+    }
 }
