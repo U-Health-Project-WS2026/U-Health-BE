@@ -15,6 +15,7 @@ class PatientBookingController extends Controller
     /**
      * Patient: View available timeslots
      * GET /api/v1/patients/bookings
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function viewBookedTimeSlots()
     {
@@ -31,6 +32,9 @@ class PatientBookingController extends Controller
     /**
      * Patient: Book an appointment
      * PUT /api/v1/patients/bookings/{id}
+     * @param Request $request
+     * @param int $booking_id
+     * @return string
      */
     public function bookAppointment(Request $request, int $booking_id)
     {
@@ -59,6 +63,8 @@ class PatientBookingController extends Controller
     /**
      * Patient: Cancel an appointment
      * PUT /api/v1/patients/bookings/cancel/{id}
+     * @param int $booking_id
+     * @return string
      */
     public function cancelAppointment(int $booking_id)
     {
@@ -74,6 +80,10 @@ class PatientBookingController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function myBookedTimeSlots(Request $request)
     {
         //get current user

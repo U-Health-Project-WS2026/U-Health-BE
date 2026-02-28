@@ -14,6 +14,9 @@ class Medication extends Model
         'description',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function treatments(){
         return $this->belongsToMany(Treatment::class, 'treatments_medications', 'medication_id', 'treatment_id')
             ->withPivot('dosis', 'amount');

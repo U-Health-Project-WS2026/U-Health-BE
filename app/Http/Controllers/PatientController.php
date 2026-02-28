@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 class PatientController extends Controller
 {
     // Liste aller Patienten (+ einfache Suche/Filter)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         $query = Patient::query();
@@ -26,6 +30,11 @@ class PatientController extends Controller
     }
 
     // einzelner Patient
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
         $patient = Patient::find($id);
@@ -38,6 +47,11 @@ class PatientController extends Controller
     }
 
     // neuen Patienten anlegen (POST)
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -54,6 +68,12 @@ class PatientController extends Controller
     }
 
     // Patientendaten aktualisieren (PUT/PATCH)
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         $patient = Patient::find($id);

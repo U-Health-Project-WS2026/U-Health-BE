@@ -15,14 +15,23 @@ class Treatment extends Model
         'date_of_treatment',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function patients(){
         return $this->belongsTo(Patient::class, 'patient_id', 'patient_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function diseases(){
         return $this->belongsToMany(Disease::class, 'treatments_diseases', 'treatment_id', 'disease_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function medications(){
         return $this->belongsToMany(Medication::class, 'treatments_medications', 'treatment_id', 'medication_id')
             ->withPivot('dosis','amount');

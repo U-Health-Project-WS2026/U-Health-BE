@@ -17,15 +17,24 @@ class Patient extends Model
         'location',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function bookings(){
         return $this->hasMany(Booking::class, 'patient_id', 'patient_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function treatments()
     {
         return $this->hasMany(Treatment::class, 'patient_id', 'patient_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');

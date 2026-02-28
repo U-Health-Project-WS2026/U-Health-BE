@@ -7,7 +7,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdminBookingResource extends JsonResource
 {
-   public function toArray($request)
+    /**
+     * @param $request
+     * @return array
+     */
+    public function toArray($request)
 {
     $patient = $this->patients;
 

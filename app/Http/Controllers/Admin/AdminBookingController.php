@@ -124,7 +124,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: View booked timeslots
-     * GET bookings/booked
+     * GET bookings/patients
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function viewBookedTimeSlots()
@@ -163,6 +163,7 @@ class AdminBookingController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
      */
     public function bookingsToday()
     {
@@ -172,7 +173,7 @@ class AdminBookingController extends Controller
 
         return response()->json(['message'=>$bookings],200);
     }
-
+     /**
      * Admin: search booked timeslots by patient id
      * GET bookings/search/{id}
      * @param $patient_id

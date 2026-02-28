@@ -12,15 +12,18 @@ class LoginController extends Controller
 {
     /**
      * Handle an incoming authentication request.
+     * @param LoginRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(LoginRequest $request)
     {
         $request->authenticate();
         $user = $request->user();
-        
+
         //his current token gets deleted
         $user->tokens()->delete();
-        
+
         //IF user email is not verified
         if (! $user->hasVerifiedEmail()) {
             $key = 'verify-resend:' . $user->id;
@@ -47,10 +50,12 @@ class LoginController extends Controller
 
     /**
      * Destroy an authenticated session.
+     * @param Request $request
+     * @return Response
      */
     public function logout(Request $request)
     {
-        
+
         $request->user()->tokens()->delete();
 
         return response()->noContent();

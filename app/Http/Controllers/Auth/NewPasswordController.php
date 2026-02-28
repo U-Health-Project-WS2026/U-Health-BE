@@ -16,8 +16,9 @@ class NewPasswordController extends Controller
 {
     /**
      * Handle an incoming new password request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
      */
     public function store(Request $request): JsonResponse
     {
@@ -51,6 +52,11 @@ class NewPasswordController extends Controller
         return response()->json(['status' => __($status)]);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
        public function change_password(Request $request){
         $request->validate([
             "current_password"=> ["required", "string"],

@@ -14,6 +14,9 @@ class Disease extends Model
         'icd_code',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function treatments(){
         return $this->belongsToMany(Treatment::class, 'treatments_diseases','disease_id', 'treatment_id');
     }

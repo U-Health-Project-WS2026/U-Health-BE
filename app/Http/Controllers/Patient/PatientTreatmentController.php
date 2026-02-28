@@ -14,6 +14,8 @@ class PatientTreatmentController extends Controller
     /**
      * Patient: view entire treatment history
      * GET /api/v1/patients/treatments
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function viewTreatmentHistory(Request $request)
     {
@@ -32,6 +34,8 @@ class PatientTreatmentController extends Controller
     /**
      * Patient: search treatment by date
      * GET /api/v1/patients/treatments/date?date_of_treatment=yyyy-mm-dd
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function searchTreatmentDate(Request $request){
 

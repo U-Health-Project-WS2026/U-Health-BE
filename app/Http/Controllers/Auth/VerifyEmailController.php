@@ -12,11 +12,14 @@ class VerifyEmailController extends Controller
 {
     /**
      * Mark the authenticated user's email address as verified.
+     * @param int $id
+     * @param string $hash
+     * @return RedirectResponse
      */
     public function __invoke(int $id, string $hash)
     {
         $user = User::findOrFail($id);
-        
+
         if (! hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
             abort(403);
         };
