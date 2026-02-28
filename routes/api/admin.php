@@ -39,6 +39,9 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //Search the booked timeslot by patient name - QUERY ?name=
     Route::get('bookings/search', [AdminBookingController::class, 'searchBookedTimeSlots']);
 
+    //Search the booked timeslots by patient_id
+    Route::get('bookings/search/{id}', [AdminBookingController::class, 'searchByPatientID']);
+
     //create new timeslot
     Route::post('bookings', [AdminBookingController::class, 'createTimeSlot']);
 

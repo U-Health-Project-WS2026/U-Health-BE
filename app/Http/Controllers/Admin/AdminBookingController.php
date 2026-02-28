@@ -11,7 +11,7 @@ class AdminBookingController extends Controller
 {
     /**
      * Admin: alle Buchungen (History) sehen.
-     * GET /api/v1/admin/bookings
+     * GET bookings
      */
     public function index()
     {
@@ -22,7 +22,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Buchungshistorie eines bestimmten Patienten.
-     * GET /api/v1/admin/bookings/patient/{patientId}
+     * GET bookings/patient/{patientId}
      */
     public function byPatient(int $patientId)
     {
@@ -36,7 +36,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Create available timeslot
-     * POST api/v1/bookings
+     * POST bookings
      */
     public function createTimeSlot(Request $request)
     {
@@ -75,7 +75,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Update timeslot
-     * PUT /api/v1/bookings/{booking_id}
+     * PUT bookings/{booking_id}
      */
     public function updateTimeSlot(Request $request, $booking_id)
     {
@@ -112,7 +112,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: Delete time-slot
-     * DELETE /api/v1/bookings/{booking_id}
+     * DELETE bookings/{booking_id}
      */
     public function deleteTimeSlot($booking_id)
     {
@@ -130,7 +130,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: View booked timeslots
-     * GET /api/v1/bookings
+     * GET bookings/booked
      */
     public function viewBookedTimeSlots()
     {
@@ -145,7 +145,7 @@ class AdminBookingController extends Controller
 
     /**
      * Admin: search booked timeslots by first- or lastname
-     * GET /api/v1/bookings/search
+     * GET bookings/search
      */
     public function searchBookedTimeSlots(Request $request)
     {
@@ -165,4 +165,19 @@ class AdminBookingController extends Controller
         return AdminBookingResource::collection($bookedSlots);
     }
 
+    /**
+     * Admin: search booked timeslots by patient id
+     * GET bookings/search/{id}
+     * @param $patient_id
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function searchByPatientID($patient_id)
+    {
+        $bookings = Booking::where('patient_id', $patient_id)
+            ->where('status', 1)
+            ->orderBy('time_slot_start', 'asc')
+            ->get();
+
+        return AdminBookingResource::collection($bookings);
+    }
 }
