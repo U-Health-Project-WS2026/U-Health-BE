@@ -163,6 +163,16 @@ class AdminBookingController extends Controller
     }
 
     /**
+     */
+    public function bookingsToday()
+    {
+        $bookings=Booking::whereDate('time_slot_start', today())
+            ->where('status', 1)
+            ->count();
+
+        return response()->json(['message'=>$bookings],200);
+    }
+
      * Admin: search booked timeslots by patient id
      * GET bookings/search/{id}
      * @param $patient_id

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminPatientController;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDiseaseController;
@@ -29,6 +28,12 @@ Route::middleware(['auth:sanctum', 'is_admin']) //User must be auth and admin
     //BOOKINGS
     //get ALL BOOKINGS from past and future - WETHER booked OR NOT
     Route::get('bookings', [AdminBookingController::class, 'index']);
+
+    //Get number of bookings today
+    Route::get('bookings/today', [AdminBookingController::class, 'bookingsToday']);
+
+    //get bookings from a specific user/patient
+    Route::get('bookings/patient/{id}', [AdminBookingController::class, 'byPatient']);
 
     //get ALL BOOKED Slots from NOW - Future // NOT BOOKINGS FROM PAST
     Route::get('bookings/booked', [AdminBookingController::class, 'viewBookedTimeSlots']);
@@ -64,4 +69,21 @@ Route::middleware(['auth:sanctum', 'is_admin']) //User must be auth and admin
     //DISEASES
     //GET ALL Diseases, GET One (by ID), Create new Disease, Patch a Disease, Delete Disease (by ID)
     Route::apiResource('diseases', AdminDiseaseController::class);
+
+
+    //Treatments
+    //get all treatments
+    Route::get('treatments', [AdminTreatmentController::class, 'index']);
+
+    //Search by date
+    Route::get('/treatments/search/by-date', [AdminTreatmentController::class, 'searchByDate']);
+
+    //History by patient id
+    Route::get('treatments/patients/{patientId}', [AdminTreatmentController::class, 'historyByPatient']);
+
+    //create a treatment with the disease and medication, find an disease_id or medication_id by its name and create the pivot table
+    Route::post('treatments', [AdminTreatmentController::class, 'store']);
+
+    //Update
+    Route::put('/treatments/{treatment_id}', [AdminTreatmentController::class, 'update']);
 });
