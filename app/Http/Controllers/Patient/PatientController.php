@@ -17,7 +17,8 @@ class PatientController extends Controller
     {
         //token based searching for user and than patient
         $user = $request->user();
-        return new PatientResource(Patient::findOrFail($user->user_id));
+        $patient = Patient::where('user_id', $user->user_id)->firstOrFail();
+        return new PatientResource($patient);
 
     }
 
