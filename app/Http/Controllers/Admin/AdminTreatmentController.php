@@ -217,6 +217,17 @@ class AdminTreatmentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $treatment = Treatment::findOrFail($id);
+
+    // Pivot-Beziehungen lösen
+    $treatment->diseases()->detach();
+    $treatment->medications()->detach();
+
+    // Behandlung löschen
+    $treatment->delete();
+
+    return redirect()
+        ->route('treatments.index')
+        ->with('success', 'Behandlung erfolgreich gelöscht.');
     }
 }
