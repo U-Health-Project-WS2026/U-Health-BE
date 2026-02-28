@@ -26,6 +26,9 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //get ALL BOOKINGS from past and future - WETHER booked OR NOT
     Route::get('bookings', [AdminBookingController::class, 'index']);
 
+    //Get number of bookings today
+    Route::get('bookings/today', [AdminBookingController::class, 'bookingsToday']);
+
     //get bookings from a specific user/patient
     Route::get('bookings/patient/{id}', [AdminBookingController::class, 'byPatient']);
 
@@ -44,13 +47,6 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     //delete booking timeslot
     Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
 
-    //TREATMENT
-    //get all treatments
-    Route::get('treatments', [AdminTreatmentController::class, 'index']);
-
-    //create a treatment with the disease and medication, find an disease_id or medication_id by its name and create the pivot table
-    Route::post('treatments', [AdminTreatmentController::class, 'store']);
-
 
     //MEDICATION
     //GET ALL Medications, GET One (by ID), Create new Medication, Patch a Medication, Delete Medication (by ID)
@@ -62,16 +58,18 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
 
 
     //Treatments
-    // 1) Create
-    Route::post('/treatments', [AdminTreatmentController::class, 'store']);
+    //get all treatments
+    Route::get('treatments', [AdminTreatmentController::class, 'index']);
 
-    // 2) Update
-    Route::patch('/treatments/{treatment}', [AdminTreatmentController::class, 'update']);
-
-    // 3) Search by date
+    //Search by date
     Route::get('/treatments/search/by-date', [AdminTreatmentController::class, 'searchByDate']);
 
-    // 4) History by patient id
-    Route::get('/patients/{patientId}/treatments', [AdminTreatmentController::class, 'historyByPatient']);
+    //History by patient id
+    Route::get('treatments/patients/{patientId}', [AdminTreatmentController::class, 'historyByPatient']);
 
+    //create a treatment with the disease and medication, find an disease_id or medication_id by its name and create the pivot table
+    Route::post('treatments', [AdminTreatmentController::class, 'store']);
+
+    //Update
+    Route::put('/treatments/{treatment_id}', [AdminTreatmentController::class, 'update']);
 });

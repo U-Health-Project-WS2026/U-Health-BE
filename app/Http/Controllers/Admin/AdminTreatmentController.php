@@ -135,8 +135,10 @@ class AdminTreatmentController extends Controller
      * @param Treatment $treatment
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Treatment $treatment)
+    public function update(Request $request, int $treatment_id)
     {
+        $treatment=Treatment::findOrFail($treatment_id);
+
         $validated = $request->validate([
             'patient_id'         => ['sometimes', 'integer', 'exists:patients,patient_id'],
             'diagnosis'          => ['sometimes', 'string'],
@@ -147,8 +149,7 @@ class AdminTreatmentController extends Controller
         $treatment->update($validated);
 
         return response()->json([
-            'message' => 'Treatment record updated successfully.',
-            'data'    => $treatment->fresh()->load(['patients', 'diseases', 'medications']),
+            'message' => 'Treatment record updated successfully.'
         ]);
     }
 

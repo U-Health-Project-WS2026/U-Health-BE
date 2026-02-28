@@ -165,4 +165,15 @@ class AdminBookingController extends Controller
         return AdminBookingResource::collection($bookedSlots);
     }
 
+    /**
+     */
+    public function bookingsToday()
+    {
+        $bookings=Booking::whereDate('time_slot_start', today())
+            ->where('status', 1)
+            ->count();
+
+        return response()->json(['message'=>$bookings],200);
+    }
+
 }
