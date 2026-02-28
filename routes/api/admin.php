@@ -33,10 +33,10 @@ Route::middleware(['auth:sanctum', 'is_admin']) //User must be auth and admin
     Route::get('bookings/today', [AdminBookingController::class, 'bookingsToday']);
 
     //get bookings from a specific user/patient
-    Route::get('bookings/patient/{id}', [AdminBookingController::class, 'byPatient']);
+    Route::get('bookings/patients/{id}', [AdminBookingController::class, 'byPatient']);
 
     //get ALL BOOKED Slots from NOW - Future // NOT BOOKINGS FROM PAST
-    Route::get('bookings/booked', [AdminBookingController::class, 'viewBookedTimeSlots']);
+    Route::get('bookings/patients', [AdminBookingController::class, 'viewBookedTimeSlots']);
 
     //Search the booked timeslot by patient name - QUERY ?name=
     Route::get('bookings/patients', [AdminBookingController::class, 'searchBookingByName']);
