@@ -48,6 +48,39 @@ class LoginController extends Controller
         ]);
     }
 
+    public function admin_store(LoginRequest $request)
+    {
+        $request->authenticate();
+        $user = $request->user();
+
+        if(!$user->is_admin)
+        {
+            return response()->json([
+                "message"=> "Nice try, You are not an admin!"
+            ],403);
+        }
+        if (! $user->hasVerifiedEmail()) {
+            $key = 'verify-resend:' . $user->id;
+
+            //ONE TIME A MINUTE USER COULD REQUEST A VERFICATION EMAIL
+            if (RateLimiter::attempt($key, 1, function () use ($user) {
+                $user->sendEmailVerificationNotification();
+            }, 60));
+
+            return response()->json([
+                "message" => "E-MAIL NOT VERFIED. WE SENT YOU A NEW VERIFICATION E-MAIL",
+                "needs_verification" => true,
+            ], 403);
+        }
+
+        $user->tokens()->delete();
+        $token = $user->createToken('LOG-user_token')->plainTextToken;
+        return response()->json([
+            "user"=>$user,
+            "token"=>$token
+        ]);
+    }
+
     /**
      * Destroy an authenticated session.
      * @param Request $request

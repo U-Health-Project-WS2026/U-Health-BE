@@ -20,6 +20,12 @@ Route::post('/login', [LoginController::class, 'store'])
     ->middleware('guest')
     ->name('login');
 
+//needs 'email', 'password' as input
+Route::post('/admin-login', [LoginController::class, 'admin_store'])
+    ->middleware('guest')
+    ->name('admin-login');
+
+
 //needs 'current_password', 'password' as input
 Route::post('/change-current-password',[NewPasswordController::class, 'change_password'])
     ->middleware('auth:sanctum')
