@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\AdminDiseaseController;
 use App\Http\Controllers\Admin\AdminMedicationController;
 use App\Http\Controllers\Admin\AdminTreatmentController;
 
-Route::middleware(['auth:sanctum']) //User must be auth and admin
+Route::middleware(['auth:sanctum', 'is_admin']) //User must be auth and admin
 ->prefix('admin') //api request begins with admin/...
 ->group(function(){
 
@@ -17,6 +17,9 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
 
     //Get a specific patients
     Route::get('patients/{id}', [AdminPatientController::class, 'show']);
+
+    //Update Information of a patient
+    Route::put('patients/{id}', [AdminPatientController::class, 'updatePatient']);
 
     //Delete a specific patient
     Route::delete('patients/{id}', [AdminPatientController::class, 'destroy']);
@@ -36,7 +39,10 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
     Route::get('bookings/booked', [AdminBookingController::class, 'viewBookedTimeSlots']);
 
     //Search the booked timeslot by patient name - QUERY ?name=
-    Route::get('bookings/search', [AdminBookingController::class, 'searchBookedTimeSlots']);
+    Route::get('bookings/patients', [AdminBookingController::class, 'searchBookingByName']);
+
+    //Search the booked timeslots by patient_id
+    Route::get('bookings/patients/{id}', [AdminBookingController::class, 'searchByPatientID']);
 
     //create new timeslot
     Route::post('bookings', [AdminBookingController::class, 'createTimeSlot']);
@@ -46,6 +52,14 @@ Route::middleware(['auth:sanctum']) //User must be auth and admin
 
     //delete booking timeslot
     Route::delete('bookings/{id}', [AdminBookingController::class, 'deleteTimeSlot']);
+
+
+    //TREATMENT
+    //get all treatments
+    Route::get('treatments', [AdminTreatmentController::class, 'index']);
+
+    //create a treatment with the disease and medication, find an disease_id or medication_id by its name and create the pivot table
+    Route::post('treatments', [AdminTreatmentController::class, 'store']);
 
 
     //MEDICATION
