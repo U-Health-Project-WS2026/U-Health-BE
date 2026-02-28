@@ -86,4 +86,8 @@ Route::middleware(['auth:sanctum', 'is_admin']) //User must be auth and admin
 
     //Update
     Route::put('/treatments/{treatment_id}', [AdminTreatmentController::class, 'update']);
+
+    //delete
+    Route::delete('/treatments/{treatment_id}', [AdminTreatmentController::class, 'destroy']);
 });
+
